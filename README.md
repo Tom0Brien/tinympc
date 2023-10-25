@@ -1,0 +1,1 @@
+**tinympc** is a lightweight C++ library which implements general linear and non-linear model predictive control

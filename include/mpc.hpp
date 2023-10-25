@@ -40,8 +40,7 @@ namespace tinympc {
             compute_gradient();
             compute_linear_constraints();
             compute_constraint_vectors(x0_in);
-            std::cout << lower_bound << std::endl;
-            std::cout << upper_bound << std::endl;
+            solver.settings()->setVerbosity(false);
             solver.settings()->setWarmStart(true);
             solver.data()->setNumberOfVariables(n * (N + 1) + m * N);
             solver.data()->setNumberOfConstraints(n * (N + 1) + n * (N + 1) + m * N);

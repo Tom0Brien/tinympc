@@ -1,4 +1,5 @@
 #include <Eigen/Core>
+#include <fstream>
 #include <iostream>
 
 #include "../include/mpc.hpp"
@@ -58,12 +59,29 @@ int main() {
 
     // Solve MPC problem for 50 time steps
     int number_of_time_steps = 50;
-
+    std::vector<Eigen::Matrix<double, n, 1>> states;
+    std::vector<Eigen::Matrix<double, m, 1>> controls;
     for (int i = 0; i < number_of_time_steps; i++) {
         // Solve MPC problem
         mpc.compute_control();
 
         // Propagate system
         mpc.propagate_system();
+
+        // Save state and control to file
+        states.push_back(mpc.get_state());
+        controls.push_back(mpc.get_control());
     }
+
+    // Save state and control to file
+    std::ofstream file("history.csv");
+    for (size_t i = 0; i < states.size(); ++i) {
+        for (int j = 0; j < n; ++j) {
+            file << states[i](j) << ",";
+        }
+        for (int j = 0; j < m; ++j) {
+            file << controls[i](j) << (j < m - 1 ? "," : "\n");
+        }
+    }
+    file.close();
 }

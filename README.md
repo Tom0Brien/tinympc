@@ -36,7 +36,65 @@ After initializing the [MPC](https://github.com/Tom0Brien/tinympc/blob/main/incl
 
 ## Examples
 
-See examples folder.
+See examples folder for a number of examples.
+
+Below is a simple example for a 2-state system that illustrates how to use the `tinympc::MPC` class:
+
+---
+
+### Example: Using the `tinympc::MPC` class for a 2-state system
+
+1. **Include the necessary headers**:
+```cpp
+#include <tinympc/mpc.hpp>
+```
+
+2. **Define your system parameters**:
+```cpp
+// Dimensions
+const int n = 2;   // Number of states
+const int m = 1;   // Number of inputs
+const int N = 50;  // Prediction horizon
+
+// Define system matrices for the 2-state system
+double Ts = 0.1;
+Eigen::Matrix<double, n, n> A;
+A << 1, Ts, Ts, 1;
+
+Eigen::Matrix<double, n, m> B;
+B << 0, Ts;
+
+// Define cost matrices
+Eigen::Matrix<double, n, n> Q = 10 * Eigen::Matrix<double, n, n>::Identity();
+Eigen::Matrix<double, m, m> R = Eigen::Matrix<double, m, m>::Identity();
+
+// Define state and input bounds
+Eigen::Matrix<double, n, 1> x_min, x_max;
+x_min << -10, -10;
+x_max << 10, 10;
+Eigen::Matrix<double, m, 1> u_min, u_max;
+u_min << -6;
+u_max << 6;
+
+// Define initial state and reference
+Eigen::Matrix<double, n, 1> x0, x_ref;
+x0 << 0.1, 0.1;
+x_ref << 1, 0;
+```
+
+3. **Instantiate the MPC class**:
+```cpp
+tinympc::MPC<double, 2, 1, N> mpc(A, B, Q, R, x_min, x_max, u_min, u_max, x0, x_ref);
+```
+
+4. **Compute and apply control for several steps**:
+```cpp
+for (int i = 0; i < 20; i++) {  // Simulate for 20 steps
+    mpc.compute_control();
+    mpc.propagate_system();
+}
+```
+
 
 ## Contact
 

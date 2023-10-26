@@ -1,5 +1,4 @@
-![image](https://github.com/Tom0Brien/tinympc/assets/41043317/b59edd8c-7c2a-4177-87f2-f8638d757d9e)
-
+![tinympc](https://github.com/Tom0Brien/tinympc/assets/41043317/404607c2-4350-4e68-bada-0405234b7205)
 **tinympc** is a lightweight C++ library that implements general linear and non-linear model predictive control (MPC) algorithms using [Eigen3](https://eigen.tuxfamily.org/index.php?title=Main_Page), [osqp-eigen](https://robotology.github.io/osqp-eigen/index.html) and [NLopt](https://nlopt.readthedocs.io/en/latest/).
 
 ## Features

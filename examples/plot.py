@@ -38,5 +38,5 @@ def plot_history(filename, n, m):
 
 if __name__ == "__main__":
     filename = "history.csv"  # Update with your filename
-    n, m = 12, 6              # Update with your dimensions for state and control
+    n, m = 2, 1             # Update with your dimensions for state and control
     plot_history(filename, n, m)

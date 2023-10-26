@@ -40,7 +40,7 @@ namespace tinympc {
             compute_gradient();
             compute_linear_constraints();
             compute_constraint_vectors(x0_in);
-            solver.settings()->setVerbosity(false);
+            solver.settings()->setVerbosity(true);
             solver.settings()->setWarmStart(true);
             solver.data()->setNumberOfVariables(n * (N + 1) + m * N);
             solver.data()->setNumberOfConstraints(n * (N + 1) + n * (N + 1) + m * N);

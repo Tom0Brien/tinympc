@@ -11,7 +11,7 @@
 
 ## Usage
 
-After initializing the [MPC](https://github.com/Tom0Brien/tinympc/blob/main/include/mpc.hpp) object with system matrices, constraints, and desired weights, the MPC can be run in two main steps:
+After initializing the [MPC](https://github.com/Tom0Brien/tinympc/blob/main/include/mpc.hpp) object with system matrices, constraints, and desired weights, the following functions are available:
 
 | Function           | Description                                                                     |
 | ------------------ | ------------------------------------------------------------------------------  |

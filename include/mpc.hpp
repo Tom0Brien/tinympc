@@ -16,8 +16,8 @@ namespace tinympc {
     class MPC {
     public:
         // Constructor
-        MPC(const Eigen::Matrix<Scalar, n, n>& A_in,
-            const Eigen::Matrix<Scalar, n, m>& B_in,
+        MPC(const Eigen::Matrix<Scalar, n, n>& Ad_in,
+            const Eigen::Matrix<Scalar, n, m>& Bd_in,
             const Eigen::Matrix<Scalar, n, n>& Q_in,
             const Eigen::Matrix<Scalar, m, m>& R_in,
             const Eigen::Matrix<Scalar, n, 1>& x_min_in,
@@ -26,8 +26,8 @@ namespace tinympc {
             const Eigen::Matrix<Scalar, m, 1>& u_max_in,
             const Eigen::Matrix<Scalar, n, 1>& x0_in,
             const Eigen::Matrix<Scalar, n, 1>& x_ref_in)
-            : A(A_in)
-            , B(B_in)
+            : Ad(Ad_in)
+            , Bd(Bd_in)
             , Q(Q_in)
             , R(R_in)
             , x_min(x_min_in)
@@ -66,7 +66,7 @@ namespace tinympc {
 
         void propagate_system() {
             // Propagate the model
-            x0 = A * x0 + B * u;
+            x0 = Ad * x0 + Bd * u;
 
             // Update the constraint bound
             update_constraint_vectors(x0);
@@ -130,7 +130,7 @@ namespace tinympc {
             for (int i = 0; i < N; i++)
                 for (int j = 0; j < n; j++)
                     for (int k = 0; k < n; k++) {
-                        Scalar value = A(j, k);
+                        Scalar value = Ad(j, k);
                         if (value != static_cast<Scalar>(0)) {
                             linear_constraints.insert(n * (i + 1) + j, n * i + k) = value;
                         }
@@ -139,7 +139,7 @@ namespace tinympc {
             for (int i = 0; i < N; i++)
                 for (int j = 0; j < n; j++)
                     for (int k = 0; k < m; k++) {
-                        Scalar value = B(j, k);
+                        Scalar value = Bd(j, k);
                         if (value != static_cast<Scalar>(0)) {
                             linear_constraints.insert(n * (i + 1) + j, m * i + k + n * (N + 1)) = value;
                         }
@@ -184,10 +184,10 @@ namespace tinympc {
 
 
         /// @brief State dynamics matrix
-        Eigen::Matrix<Scalar, n, n> A = Eigen::Matrix<Scalar, n, n>::Zero();
+        Eigen::Matrix<Scalar, n, n> Ad = Eigen::Matrix<Scalar, n, n>::Zero();
 
         /// @brief Input matrix
-        Eigen::Matrix<Scalar, n, m> B = Eigen::Matrix<Scalar, n, m>::Zero();
+        Eigen::Matrix<Scalar, n, m> Bd = Eigen::Matrix<Scalar, n, m>::Zero();
 
         /// @brief State cost matrix
         Eigen::Matrix<Scalar, n, n> Q = Eigen::Matrix<Scalar, n, n>::Identity();
